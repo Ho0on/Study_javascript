@@ -14,6 +14,7 @@ class UserStorage {
             }, 2000);
         });
     };
+
     getRoles(user) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -25,6 +26,12 @@ class UserStorage {
             }, 1000);
         });
     };
+
+    async getUserWithRole(user, password) {
+        const id = await this.loginUser(user, password);
+        const role = await this.getRoles(id);
+        return role;
+    }
 };
 
 const userStorage = new UserStorage();
@@ -35,3 +42,8 @@ userStorage
     .then(user => userStorage.getRoles(user))
     .then(user => alert(`Hello ${user.name}, you have a ${user.role} role!`))
     .catch(error => console.log(error));
+
+
+userStorage
+    .getUserWithRole(id, password)
+    .then(console.log);
